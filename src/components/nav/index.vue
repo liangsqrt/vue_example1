@@ -5,7 +5,7 @@
       <!-- logo -->
       <div id="logo">
         <h1>
-          <a href="index.html">xx志愿</a>
+          <a href="index.html">xx公司</a>
         </h1>
       </div>
       <!-- //logo -->
@@ -59,5 +59,7 @@ export default {
 </script>
 
 <style scoped>
-  @import "../../assets/css/style.css";
+    @import "../../assets/css/bootstrap.min.css";
+    @import "../../assets/css/style.css";
+
 </style>

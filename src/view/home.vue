@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Nav from '../components/nav/index'
+import Nav from '../components/nav/eindex'
 
 
 export default {
