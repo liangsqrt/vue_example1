@@ -1,60 +1,46 @@
 <template>
     <div>
         <el-row>
-            <div class="headder-top d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
-                <!-- logo -->
-                <div id="logo">
-                    <h1>
-                        <a href="index.html">HLZZ</a>
-                    </h1>
-                </div>
-                <nav>
-                    <ul class="menu">
-                        <li>
-                            <a href="index.html" class="active">主页</a>
-                        </li>
-                        <li>
-                            <a href="about.html">团队</a>
-                        </li>
-                        <li>
-                            <a href="service.html">服务</a>
-                        </li>
-                        <li>
-                            <!-- First Tier Drop Down -->
-                            <label for="drop-2" class="toggle toogle-2">Dropdown
-                                <span class="fa fa-angle-down" aria-hidden="true"></span>
-                            </label>
-                            <a href="#">成果
-                                <span class="fa fa-angle-down" aria-hidden="true"></span>
-                            </a>
-                            <input type="checkbox" id="drop-2" />
-                            <ul>
-                                <li>
-                                    <a href="gallery.html" class="drop-text">支援填报平台</a>
-                                </li>
-                                <li>
-                                    <a href="error_page.html" class="drop-text">专家面对面</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="contact.html">在线咨询</a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- //nav -->
-                <div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
-                    <!-- search -->
-                    <div class="search-w3layouts">
-                        <form action="#" method="post" class="search-bottom-wthree d-flex">
-                            <input class="search" type="search" placeholder="Search Here..." required="">
-                            <el-button icon="el-icon-search" plain></el-button>
-                        </form>
+            <el-menu
+                    :default-active="activeIndex2"
+                    class=" headder-top d-lg-flex justify-content-between align-items-center py-3 px-sm-3"
+                    mode="horizontal"
+                    @select="handleSelect"
+                    background-color=""
+                    text-color="#fff"
+                    active-text-color="#ffd04b"
+                    active-background-color=""
+            >
+                <el-col :span="6">
+                    <div id="logo">
+                        <h1>
+                            <a href="index.html">HLZZ</a>
+                        </h1>
                     </div>
-                    <!-- //search -->
-
-                </div>
-            </div>
+                </el-col>
+                <el-col :span="14">
+                    <el-row>
+                        <el-menu-item index="1">处理中心</el-menu-item>
+                        <el-submenu index="2">
+                            <template slot="title">我的工作台</template>
+                            <el-menu-item index="2-1">选项1</el-menu-item>
+                            <el-menu-item index="2-2">选项2</el-menu-item>
+                            <el-menu-item index="2-3">选项3</el-menu-item>
+                            <el-submenu index="2-4">
+                                <template slot="title">选项4</template>
+                                <el-menu-item index="2-4-1">选项1</el-menu-item>
+                                <el-menu-item index="2-4-2">选项2</el-menu-item>
+                                <el-menu-item index="2-4-3">选项3</el-menu-item>
+                            </el-submenu>
+                        </el-submenu>
+                        <el-menu-item index="3" disabled>消息中心</el-menu-item>
+                        <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+                    </el-row>
+                </el-col>
+                <el-col :span="4">
+                    <div class="block"><el-avatar shape="square" :size="50" :src="squareUrl"></el-avatar></div>
+                </el-col>
+            </el-menu>
         </el-row>
     </div>
 </template>
@@ -69,6 +55,19 @@
     @import "../../style/nav/nav.scss";
     @import "../../assets/css/bootstrap.min.css";
     @import "../../assets/css/style.css";
+
+    .el-menu-item:focus, .el-menu-item:hover {
+        outline: 0;
+         background-color: #006666 !important;
+    }
+
+    .el-submenu__title:hover {
+         background: #006666 !important;
+    }
+    .el-submenu.is-opened{
+        background: #006666;
+    }
+
 
 
     /*@media (min-width: 576px) {*/
