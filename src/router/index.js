@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from "../views/home";
+// import home from "../views/home";
 
 Vue.use(Router)
 
 export const constantRoutes = [
     {
         path: '/',
-        component: home,
+        component: () => import('@/views/mainpage/example'),
         // hidden: true,
         children: [
             {
@@ -17,6 +17,10 @@ export const constantRoutes = [
             },
         ]
     },
+    {
+        path: '/test',
+        component: () => import('@/test/test1'),
+    }
 
 ]
 

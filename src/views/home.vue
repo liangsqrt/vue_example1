@@ -1,20 +1,28 @@
 <template>
     <div>
-        <Nav></Nav>
-        <router-view></router-view>
+        <div class="container">
+            <el-header>
+                <my-nav></my-nav>
+            </el-header>
+            <el-main>
+                <router-view>
+
+                </router-view>
+            </el-main>
+            <el-footer>Footer</el-footer>
+        </div>
     </div>
 </template>
 
 <script>
-import Nav from '../components/nav/index2'
+import myNav from '../components/nav/index'
 
 
 
 export default {
     name: "home",
     components:{
-        Nav,
-
+         myNav
     }
 
 }
