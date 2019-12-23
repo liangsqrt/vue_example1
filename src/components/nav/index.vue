@@ -1,35 +1,52 @@
 <template>
-    <div class="headerWrapper">
-        <header class="header">
-            <el-container class="container">
-                <h1 class="logo">
-                </h1>
-                <ul class="nav">
-                    <li class="nav-item nav-algolia-search">
-                        <div class="el-autocomplete">
-                            <el-input v-model="select">
-
-                            </el-input>
-                        </div>
+    <div>
+        <header id="header">
+            <h1 id="logo">
+                <a href="index.html">name</a>
+            </h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="#">Layouts</a>
+                        <ul>
+                            <li><a href="left-sidebar.html">Left Sidebar</a></li>
+                            <li><a href="right-sidebar.html">Right Sidebar</a></li>
+                            <li><a href="no-sidebar.html">No Sidebar</a></li>
+                            <li>
+                                <a href="#">Submenu</a>
+                                <ul>
+                                    <li><a href="#">Option 1</a></li>
+                                    <li><a href="#">Option 2</a></li>
+                                    <li><a href="#">Option 3</a></li>
+                                    <li><a href="#">Option 4</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-
+                    <li><a href="elements.html">Elements</a></li>
+                    <li>
+                        <userhead v-bind:user="user"></userhead>
                     </li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
                 </ul>
-            </el-container>
+            </nav>
         </header>
     </div>
 </template>
 
 <script>
+    import userhead from "./userhead";
     export default {
+        components:{
+            userhead
+        },
         name: "myNav",
         data(){
             return {
+                user:{
+                    isLogIn: false,
+                    username: 'liang',
+                },
                 select: ""
             }
         }
@@ -39,57 +56,7 @@
 
 
 
-<style scoped   type="text/scss" lang="scss">
-    .logo{
-        line-height: 80px;
-    }
-    .headerWrapper .container {
-        padding: 0;
-    }
-
-    header {
-        display: block;
-    }
-
-    .container .nav{
-        align-content: center;
-    }
-
-    .header .container{
-        height: 100%;
-        box-sizing: border-box;
-        border-bottom: 1px solid #dcdfe6;
-    }
-
-
-    .headerWrapper {
-        position: fixed;
-        width: 100%;
-        height: 80px;
-        left: 0;
-        top: 0;
-        z-index: 1500;
-    }
-
-
-    .header{
-        height: 80px;
-        background-color: #00ccff;
-        /*width: 100%;*/
-        color: #ffffff;
-        top: 0;
-        left: 0;
-        position: relative;
-        line-height: 80px;
-        z-index: 100
-    }
-
-
-    .header .nav-item{
-        display:inline;
-    }
-    .header .nav-item.nav-algolia-search{
-        cursor: default;
-        list-style: none;
-    }
+<style scoped type="text/scss" lang="scss">
+    @import '@/assets/css/header.scss';
+    @import '@/assets/css/main.scss';
 </style>
