@@ -1,38 +1,67 @@
 <template>
     <div  class="user header ">
         <div v-if="user.isLogIn">
-            <div>
-
-                    <h2 is="sui-header" size="small" class="user avatar">
-
-                        <el-avatar shape="square" size="medium" :src="avatarUrl"></el-avatar> 
-                        <a>{{ user.username }}</a>
-                    </h2>
+            <div class="user avatar">
+                <el-avatar shape="square" :src="avatarUrl">
+                </el-avatar>
+                <a>{{ user.username }}</a>
             </div>
         </div>
-        <div v-else>
-            <el-button size="large" class="login button" @click.native="handleLoginClick">登陆</el-button>
-            <el-button size="large" class="login sign in button">注册</el-button>
-        </div>
+            <div v-else>
+                <el-button size="large" class="login button" @click.native="handleLoginClick">登陆</el-button>
+                <el-button size="large" class="login sign in button" @click="handleSignInClick">注册</el-button>
+            </div>
         <div>
             <el-dialog
-                    title="提示"
-                    :visible.sync="loginDialogVisible"
-                    width="30%"
-                    :before-close="handleLoginBeforeClose"
-                    >
-                <el-form :model="form">
-                    <el-form-item label="用户名" :label-width="formLabelWidth">
+                title="提示"
+                :visible.sync="dialogLogInVisible"
+                width="30%"
+                :before-close="handleLoginClick"
+                :modal-append-to-body='false'
+                >
+                <el-form :model="userLoginInput">
+                    <el-form-item label="用户名" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.username" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" :label-width="formLabelWidth">
+                    <el-form-item label="密码" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.password" autocomplete="off" type="password"></el-input>
                     </el-form-item>
                 </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="loginDialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="loginDialogVisible = false">确 定</el-button>
-                </div>
+            </el-dialog>
+
+            <el-dialog
+                title="用户注册"
+                :visible.sync="dialogSignInVisible"
+                width="30%"
+                :before-close="handleSignInClick"
+                :modal-append-to-body='false'
+                >
+                <el-form :model="userSignInInput" :rules="rules">
+                    <el-form-item label="用户名" :label-width="pageShowControl.formLabelWidth">
+                    <el-input v-model="userLoginInput.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    
+                    <el-form-item label="密码" :label-width="pageShowControl.formLabelWidth">
+                    <el-input v-model="userLoginInput.password1" autocomplete="off" type="password"></el-input>
+                    </el-form-item>
+                    
+                    <el-form-item label="确认密码" :label-width="pageShowControl.formLabelWidth">
+                    <el-input v-model="userLoginInput.password2" autocomplete="off" type="password"></el-input>
+                    </el-form-item>
+                    
+                    <el-form-item label="手机号码" :label-width="pageShowControl.formLabelWidth">
+                    <el-input v-model="userLoginInput.mobile" autocomplete="off" type="password"></el-input>
+                    </el-form-item>
+                    
+                    <el-form-item label="验证码" :label-width="pageShowControl.formLabelWidth">
+                    <el-input v-model="userLoginInput.verify_code" autocomplete="off" type="password"></el-input>
+                    </el-form-item>
+                    
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                    </el-form-item>
+                </el-form>
             </el-dialog>
         </div>
     </div>
@@ -43,11 +72,32 @@
         name: "userhead",
         data(){
             return {
-                loginDialogVisible:true,
+                pageShowControl: {
+                    formLabelWidth: "50"
+                },
+
+                dialogLogInVisible: false,
+                dialogSignInVisible: false,
                 avatarUrl:'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
                 userLoginInput:{
-                    username:'',
-                    password:'',
+                    username: '',
+                    password: '',
+                },
+                userSignInInput:{
+                    username: "",
+                    password1: "",
+                    password2: "",
+                    mobile: "",
+                    verify_code: "",
+                },
+                rules:{
+                    username: [
+                        {
+                            required:true,
+                            message: '请输入用户名',
+                            trigger: 'blur'
+                        }
+                    ]
                 }
             }
         },
@@ -61,51 +111,31 @@
         },
         methods: {
             handleLoginClick(){
-                this.loginDialogVisible = !this.loginDialogVisible;
+                this.dialogLogInVisible = !this.dialogLogInVisible;
+            },
+            handleSignInClick(){
+                this.dialogSignInVisible = !this.dialogSignInVisible;
             },
             handleLoginBeforeClose(){
                 this.userLoginInput.username = ""
                 this.userLoginInput.password = ""
-                this.loginDialogVisible = false
+                this.loginDialogLogInVisible = false
             }
         },
-        watch:{
-            user(newValue, oldValue){
-                console.log("the new value is:")
-                console.log(newValue)
-                console.log("the old value is:")
-                console.log(oldValue)
-            }
-        }
+        // watch:{
+        //     user(newValue, oldValue){
+        //         console.log("the new value is:")
+        //         console.log(newValue)
+        //         console.log("the old value is:")
+        //         console.log(oldValue)
+        //     }
+        // }
     }
 </script>
 
 <style scoped>
-    .user .img{
-    /*padding: ;*/
-}
-    .user.header{
-        display: inline-block;
-        /* line-height:3em !important;
-        padding: 10px 0 10px 0 */
-        
+    .user .avatar{
+        vertical-align: middle;
     }
-    .user.avatar{
-        /* line-height:1.5em;
-        padding: 10px 0 10px 0 ; */
-        position: absolute;
-        /* padding-top: 10px; */
-    }
-    .user.header.my.header{
-        padding: 20px 0px 0px 0px;
-    }
-    .login.button{
-        background: #00ccff;
-        padding-right: 12px;
-        padding-left: 12px;
-        border: 0px;
-    }
-    .login.button:hover{
-        background: #00BBFF;
-    }
+    
 </style>
