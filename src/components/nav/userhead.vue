@@ -3,45 +3,36 @@
         <div v-if="user.isLogIn">
             <div>
 
-<!--                    <a is="sui-menu-item">-->
-<!--                        <sui-icon name="mail" /> Messages-->
-<!--                        <sui-label color="red" floating>-->
-<!--                            22-->
-<!--                        </sui-label>-->
-<!--                    </a>-->
-<!--                    <a is="sui-menu-item">-->
-<!--                        <sui-icon name="users" /> Friends-->
-<!--                        <sui-label color="teal" floating>-->
-<!--                            22-->
-<!--                        </sui-label>-->
-<!--                    </a>-->
-                    <h2 is="sui-header" size="small" class="my header">
-<!--                        <sui-label color="red" floating>20</sui-label>-->
-                        <sui-image circular src="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png" /> {{ user.username }}
+                    <h2 is="sui-header" size="small" class="user avatar">
+
+                        <el-avatar shape="square" size="medium" :src="avatarUrl"></el-avatar> 
+                        <a>{{ user.username }}</a>
                     </h2>
-
-
-<!--                <a is="sui-label" image size="huge" color="blue">-->
-<!--                    <img src="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png" >-->
-
-<!--                </a>-->
             </div>
         </div>
         <div v-else>
-            <el-button size="large" class="login button" @click.native="clickLogin">登陆</el-button>
+            <el-button size="large" class="login button" @click.native="handleLoginClick">登陆</el-button>
             <el-button size="large" class="login sign in button">注册</el-button>
         </div>
         <div>
             <el-dialog
                     title="提示"
-                    :visible.sync="dialogVisible"
+                    :visible.sync="loginDialogVisible"
                     width="30%"
-                    :before-close="handleClose">
-                <span>这是一段信息</span>
-                <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
+                    :before-close="handleLoginBeforeClose"
+                    >
+                <el-form :model="form">
+                    <el-form-item label="用户名" :label-width="formLabelWidth">
+                    <el-input v-model="userLoginInput.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" :label-width="formLabelWidth">
+                    <el-input v-model="userLoginInput.password" autocomplete="off" type="password"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="loginDialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="loginDialogVisible = false">确 定</el-button>
+                </div>
             </el-dialog>
         </div>
     </div>
@@ -52,7 +43,12 @@
         name: "userhead",
         data(){
             return {
-                showLogin:false
+                loginDialogVisible:true,
+                avatarUrl:'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
+                userLoginInput:{
+                    username:'',
+                    password:'',
+                }
             }
         },
         props: {
@@ -64,9 +60,14 @@
             }
         },
         methods: {
-            clickLogin(){
-                this.showLogin = !this.showLogin;
+            handleLoginClick(){
+                this.loginDialogVisible = !this.loginDialogVisible;
             },
+            handleLoginBeforeClose(){
+                this.userLoginInput.username = ""
+                this.userLoginInput.password = ""
+                this.loginDialogVisible = false
+            }
         },
         watch:{
             user(newValue, oldValue){
@@ -85,6 +86,15 @@
 }
     .user.header{
         display: inline-block;
+        /* line-height:3em !important;
+        padding: 10px 0 10px 0 */
+        
+    }
+    .user.avatar{
+        /* line-height:1.5em;
+        padding: 10px 0 10px 0 ; */
+        position: absolute;
+        /* padding-top: 10px; */
     }
     .user.header.my.header{
         padding: 20px 0px 0px 0px;

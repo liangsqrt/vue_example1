@@ -44,7 +44,7 @@
         data(){
             return {
                 user:{
-                    isLogIn: false,
+                    isLogIn: true,
                     username: 'liang',
                 },
                 select: ""
