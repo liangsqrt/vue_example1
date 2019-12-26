@@ -14,13 +14,13 @@ module.exports = {
         port: 8080,
         https: false,
         hotOnly: false,
-        // proxy: {
-        //     '/api': {
-        //         target: 'business.1-dian.cn',
-        //         ws: true,
-        //         changOrigin: true
-        //     }
-        // }
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8000',
+                ws: true,
+                changOrigin: true
+            }
+        }
     },
     configureWebpack: {
         // provide the app's title in webpack's name field, so that

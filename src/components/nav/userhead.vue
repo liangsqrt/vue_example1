@@ -26,6 +26,10 @@
                     <el-form-item label="密码" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.password" autocomplete="off" type="password"></el-input>
                     </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="handleLogin">登陆</el-button>
+                    </el-form-item>
                 </el-form>
             </el-dialog>
 
@@ -40,23 +44,23 @@
                     <el-form-item label="用户名" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.username" autocomplete="off"></el-input>
                     </el-form-item>
-                    
+
                     <el-form-item label="密码" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.password1" autocomplete="off" type="password"></el-input>
                     </el-form-item>
-                    
+
                     <el-form-item label="确认密码" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.password2" autocomplete="off" type="password"></el-input>
                     </el-form-item>
-                    
+
                     <el-form-item label="手机号码" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.mobile" autocomplete="off" type="password"></el-input>
                     </el-form-item>
-                    
+
                     <el-form-item label="验证码" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.verify_code" autocomplete="off" type="password"></el-input>
                     </el-form-item>
-                    
+
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
                         <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -120,6 +124,9 @@
                 this.userLoginInput.username = ""
                 this.userLoginInput.password = ""
                 this.loginDialogLogInVisible = false
+            },
+            handleLogin(){
+                this.$store.dispatch("user/login", this.userLoginInput)
             }
         },
         // watch:{
@@ -137,5 +144,5 @@
     .user .avatar{
         vertical-align: middle;
     }
-    
+
 </style>
