@@ -26,7 +26,7 @@
                     </li>
                     <li><a href="elements.html">Elements</a></li>
                     <li>
-                        <userhead v-bind:user="user"></userhead>
+                        <userhead></userhead>
                     </li>
                 </ul>
             </nav>
@@ -36,6 +36,7 @@
 
 <script>
     import userhead from "./userhead";
+
     export default {
         components:{
             userhead
@@ -43,10 +44,6 @@
         name: "myNav",
         data(){
             return {
-                user:{
-                    isLogIn: false,
-                    username: 'liang',
-                },
                 select: ""
             }
         }

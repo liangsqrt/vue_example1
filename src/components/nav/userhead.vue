@@ -74,6 +74,16 @@
 <script>
     export default {
         name: "userhead",
+        mounted(){
+            this.user.username = this.$store.user.username
+
+            window.console.log("in mounted")
+            if(this.$store.user.token){
+                this.user.isLogIn = true
+            }else {
+                this.user.isLogIn = false
+            }
+        },
         data(){
             return {
                 pageShowControl: {
@@ -86,6 +96,10 @@
                 userLoginInput:{
                     username: '',
                     password: '',
+                },
+                user:{
+                    username: this.$store.user.username,
+                    isLogIn: this.$store.user.token,
                 },
                 userSignInInput:{
                     username: "",
@@ -105,14 +119,14 @@
                 }
             }
         },
-        props: {
-            user:{
-                type: Object,
-                default: () => {
-                    return {isLogIn: false}
-                }
-            }
-        },
+        // props: {
+        //     user:{
+        //         type: Object,
+        //         default: () => {
+        //             return {isLogIn: false}
+        //         }
+        //     }
+        // },
         methods: {
             handleLoginClick(){
                 this.dialogLogInVisible = !this.dialogLogInVisible;
@@ -126,7 +140,12 @@
                 this.loginDialogLogInVisible = false
             },
             handleLogin(){
-                this.$store.dispatch("user/login", this.userLoginInput)
+                this.$store.dispatch("user/login", this.userLoginInput).then(()=>{
+                    this.dialogLogInVisible = false
+                    this.dialogSignInVisible = false
+                    this.$store.commit("SET_NAME", "liang")
+                    this.$refs.user.isLogIn = true
+                })
             }
         },
         // watch:{
