@@ -40,7 +40,7 @@
                 :before-close="handleSignInClick"
                 :modal-append-to-body='false'
                 >
-                <el-form :model="userSignInInput" :rules="rules">
+                <el-form :model="userSignInInput" >
                     <el-form-item label="用户名" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.username" autocomplete="off"></el-input>
                     </el-form-item>
@@ -75,14 +75,15 @@
     export default {
         name: "userhead",
         mounted(){
-            this.user.username = this.$store.user.username
+            window.console.log("in mounted",this.$store)
+            // this.user.username = this.$store.user.username
 
-            window.console.log("in mounted")
-            if(this.$store.user.token){
-                this.user.isLogIn = true
-            }else {
-                this.user.isLogIn = false
-            }
+            // window.console.log("in mounted")
+            // if(this.$store.user.token){
+            //     this.user.isLogIn = true
+            // }else {
+            //     this.user.isLogIn = false
+            // }
         },
         data(){
             return {
@@ -98,25 +99,25 @@
                     password: '',
                 },
                 user:{
-                    username: this.$store.user.username,
-                    isLogIn: this.$store.user.token,
+                    username: this.$store.state.user.name,
+                    isLogIn: this.$store.state.user.token,
                 },
                 userSignInInput:{
-                    username: "",
+                    name: "",
                     password1: "",
                     password2: "",
                     mobile: "",
                     verify_code: "",
                 },
-                rules:{
-                    username: [
-                        {
-                            required:true,
-                            message: '请输入用户名',
-                            trigger: 'blur'
-                        }
-                    ]
-                }
+                // rules:{
+                //     name: [
+                //         {
+                //             required:true,
+                //             message: '请输入用户名',
+                //             trigger: 'blur'
+                //         }
+                //     ]
+                // }
             }
         },
         // props: {
@@ -135,7 +136,7 @@
                 this.dialogSignInVisible = !this.dialogSignInVisible;
             },
             handleLoginBeforeClose(){
-                this.userLoginInput.username = ""
+                this.userLoginInput.name = ""
                 this.userLoginInput.password = ""
                 this.loginDialogLogInVisible = false
             },
