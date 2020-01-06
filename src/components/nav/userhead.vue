@@ -75,10 +75,10 @@
     export default {
         name: "userhead",
         mounted(){
-            this.user.username = this.$store.user.username
+            this.user.username = this.$store.state.user.username
 
             window.console.log("in mounted")
-            if(this.$store.user.token){
+            if(this.$store.state.user.token){
                 this.user.isLogIn = true
             }else {
                 this.user.isLogIn = false
@@ -98,8 +98,8 @@
                     password: '',
                 },
                 user:{
-                    username: this.$store.user.username,
-                    isLogIn: this.$store.user.token,
+                    username: this.$store.state.user.username,
+                    isLogIn: this.$store.state.user.token,
                 },
                 userSignInInput:{
                     username: "",
