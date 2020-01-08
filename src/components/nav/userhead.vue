@@ -1,10 +1,11 @@
 <template>
     <div  class="user header ">
-        <div v-if="user.isLogIn">
+        <div v-if="this.$store.state.user.token">
             <div class="user avatar">
                 <el-avatar shape="square" :src="avatarUrl">
                 </el-avatar>
                 <a>{{ user.username }}</a>
+                <el-button @click="handleLogout">logout</el-button>
             </div>
         </div>
             <div v-else>
@@ -40,7 +41,7 @@
                 :before-close="handleSignInClick"
                 :modal-append-to-body='false'
                 >
-                <el-form :model="userSignInInput" :rules="rules">
+                <el-form :model="userSignInInput" >
                     <el-form-item label="用户名" :label-width="pageShowControl.formLabelWidth">
                     <el-input v-model="userLoginInput.username" autocomplete="off"></el-input>
                     </el-form-item>
@@ -75,14 +76,15 @@
     export default {
         name: "userhead",
         mounted(){
-            this.user.username = this.$store.state.user.username
+            window.console.log("in mounted",this.$store)
+            // this.user.username = this.$store.user.username
 
-            window.console.log("in mounted")
-            if(this.$store.state.user.token){
-                this.user.isLogIn = true
-            }else {
-                this.user.isLogIn = false
-            }
+            // window.console.log("in mounted")
+            // if(this.$store.user.token){
+            //     this.user.isLogIn = true
+            // }else {
+            //     this.user.isLogIn = false
+            // }
         },
         data(){
             return {
@@ -98,25 +100,25 @@
                     password: '',
                 },
                 user:{
-                    username: this.$store.state.user.username,
+                    username: this.$store.state.user.name,
                     isLogIn: this.$store.state.user.token,
                 },
                 userSignInInput:{
-                    username: "",
+                    name: "",
                     password1: "",
                     password2: "",
                     mobile: "",
                     verify_code: "",
                 },
-                rules:{
-                    username: [
-                        {
-                            required:true,
-                            message: '请输入用户名',
-                            trigger: 'blur'
-                        }
-                    ]
-                }
+                // rules:{
+                //     name: [
+                //         {
+                //             required:true,
+                //             message: '请输入用户名',
+                //             trigger: 'blur'
+                //         }
+                //     ]
+                // }
             }
         },
         // props: {
@@ -135,7 +137,7 @@
                 this.dialogSignInVisible = !this.dialogSignInVisible;
             },
             handleLoginBeforeClose(){
-                this.userLoginInput.username = ""
+                this.userLoginInput.name = ""
                 this.userLoginInput.password = ""
                 this.loginDialogLogInVisible = false
             },
@@ -145,6 +147,11 @@
                     this.dialogSignInVisible = false
                     this.$store.commit("SET_NAME", "liang")
                     this.$refs.user.isLogIn = true
+                })
+            },
+            handleLogout(){
+                this.$store.dispatch("user/logout").then(()=>{
+                    this.$message.warn("logout!!")
                 })
             }
         },
