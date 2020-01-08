@@ -25,7 +25,7 @@ const actions = {
     login({ commit }, userInfo) {
         const { username, password } = userInfo
         return new Promise((resolve, reject) => {
-            login({ username: username.trim(), password: password }).then(response => {
+            login({ username: username.trim(), password: password, verify_code: 123 }).then(response => {
                 const { data } = response
                 commit('SET_TOKEN', data.token)
                 commit('SET_NAME', data.username)
@@ -61,14 +61,14 @@ const actions = {
     // user logout
     logout({ commit, state }) {
         return new Promise((resolve, reject) => {
-            logout(state.token).then(() => {
+            // logout(state.token).then(() => {
                 commit('SET_TOKEN', '')
                 removeToken()
                 resetRouter()
                 resolve()
-            }).catch(error => {
-                reject(error)
-            })
+            // }).catch(error => {
+            //     reject(error)
+            // })
         })
     },
 

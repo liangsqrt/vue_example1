@@ -1,10 +1,11 @@
 <template>
     <div  class="user header ">
-        <div v-if="user.isLogIn">
+        <div v-if="this.$store.state.user.token">
             <div class="user avatar">
                 <el-avatar shape="square" :src="avatarUrl">
                 </el-avatar>
                 <a>{{ user.username }}</a>
+                <el-button @click="handleLogout">logout</el-button>
             </div>
         </div>
             <div v-else>
@@ -146,6 +147,11 @@
                     this.dialogSignInVisible = false
                     this.$store.commit("SET_NAME", "liang")
                     this.$refs.user.isLogIn = true
+                })
+            },
+            handleLogout(){
+                this.$store.dispatch("user/logout").then(()=>{
+                    this.$message.warn("logout!!")
                 })
             }
         },
