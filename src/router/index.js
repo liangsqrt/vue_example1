@@ -20,7 +20,12 @@ export const constantRoutes = [
     {
         path: '/test',
         component: () => import('@/test/test1'),
-    }
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: ()=>import("../views/login"),
+    },
 
 ]
 
